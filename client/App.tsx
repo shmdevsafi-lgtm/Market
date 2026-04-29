@@ -18,6 +18,9 @@ import Projects from "./pages/Projects";
 import ProjectsPrinting from "./pages/ProjectsPrinting";
 import ProjectsPottery from "./pages/ProjectsPottery";
 
+// Catalog Page (Hybrid Static + Dynamic)
+import Catalog from "./pages/Catalog";
+
 // Order and Cart Pages
 import Cart from "./pages/Cart";
 import OrderForm from "./pages/OrderForm";
@@ -61,6 +64,9 @@ const App = () => (
             <Routes>
           {/* Home */}
           <Route path="/" element={<Home />} />
+
+          {/* Catalog Route (Hybrid Catalog) */}
+          <Route path="/catalog" element={<Catalog />} />
 
           {/* Projects Routes */}
           <Route path="/projects" element={<Projects />} />
