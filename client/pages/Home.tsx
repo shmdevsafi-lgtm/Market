@@ -142,7 +142,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Baby Smile Card */}
           <a
             href="https://basmat-radie.netlify.app"
@@ -230,51 +230,6 @@ export default function Home() {
               </div>
             </div>
           </Link>
-
-          {/* C W Studio Card */}
-          <a
-            href="https://c-w-studio.netlify.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group h-full rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2 cursor-pointer"
-          >
-            <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-8 h-full flex flex-col justify-between relative overflow-hidden">
-              {/* Animated background elements */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20 group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full -ml-16 -mb-16"></div>
-
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-5xl">🎨</span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                  C W Studio
-                </h3>
-                <p className="text-white/90 text-base">
-                  استوديو متخصص في التصميم والإبداع والحلول البصرية المبتكرة
-                </p>
-              </div>
-
-              {/* Arrow indicator */}
-              <div className="relative z-10 mt-6 inline-flex items-center gap-2 text-white font-semibold group-hover:translate-x-2 transition-transform">
-                <span>زيارة الموقع</span>
-                <svg
-                  className="w-5 h-5 rtl:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </div>
-            </div>
-          </a>
         </div>
       </section>
 
