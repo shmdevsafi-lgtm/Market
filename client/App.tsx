@@ -21,6 +21,12 @@ import ProjectsPottery from "./pages/ProjectsPottery";
 // Catalog Page (Hybrid Static + Dynamic)
 import Catalog from "./pages/Catalog";
 
+// Category Pages
+import SHMCategory from "./pages/SHMCategory";
+import ScoutCampingCategory from "./pages/ScoutCampingCategory";
+import MedicalCategory from "./pages/MedicalCategory";
+import PacksCategory from "./pages/PacksCategory";
+
 // Order and Cart Pages
 import Cart from "./pages/Cart";
 import OrderForm from "./pages/OrderForm";
@@ -67,6 +73,12 @@ const App = () => (
 
           {/* Catalog Route (Hybrid Catalog) */}
           <Route path="/catalog" element={<Catalog />} />
+
+          {/* Category Routes */}
+          <Route path="/shm" element={<SHMCategory />} />
+          <Route path="/scout-camping" element={<ScoutCampingCategory />} />
+          <Route path="/medical" element={<MedicalCategory />} />
+          <Route path="/packs" element={<PacksCategory />} />
 
           {/* Projects Routes */}
           <Route path="/projects" element={<Projects />} />
