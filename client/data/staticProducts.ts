@@ -54,10 +54,10 @@ export const CHEMISE_SHM: StaticProduct = {
   name: 'Chemise SHM Officielle',
   category: 'shm',
   subcategory: 'uniforme',
-  price: 249.99,
+  price: 100,
   description: 'Chemise rouge officielle SHM - uniforme scout',
   detailedDescription: `Chemise rouge officielle SHM.
-  
+
 Caractéristiques:
 - Col structuré
 - Deux poches poitrine
@@ -91,30 +91,30 @@ Tailles disponibles: S, M, L, XL, XXL, XXXL`,
 };
 
 /**
- * Foulard / Nidil SHM
+ * منديل SHM (Nidil)
  * Produit core - accessoire uniforme
  */
-export const FOULARD_NIDIL: StaticProduct = {
-  id: 'shm-foulard-001',
-  slug: 'foulard-nidil-shm',
-  name: 'Foulard Nidil SHM',
+export const MANDIL_SHM: StaticProduct = {
+  id: 'shm-mandil-001',
+  slug: 'mandil-shm',
+  name: 'منديل',
   category: 'shm',
   subcategory: 'uniforme',
-  price: 89.99,
-  description: 'Foulard officiel SHM - accessoire uniforme',
-  detailedDescription: `Foulard officiel Nidil SHM.
+  price: 30,
+  description: 'منديل رسمي SHM - إكسسوار الزي الموحد',
+  detailedDescription: `منديل رسمي SHM.
 
-Caractéristiques:
-- Couleur verte officielle
-- Imprimé logo SHM
-- Dimensions: 80 x 80 cm
-- Matière: 100% coton
-- Résiste au lavage
-- Pliage traditionnel inclus`,
+الخصائص:
+- لون أخضر رسمي
+- شعار SHM
+- الأبعاد: 80 × 80 سم
+- المادة: 100٪ قطن
+- يقاوم الغسيل
+- الطي التقليدي مشمول`,
   images: [
     {
       url: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&h=800&fit=crop',
-      alt: 'Foulard Nidil SHM Vert',
+      alt: 'منديل SHM أخضر',
       isPrimary: true,
     },
   ],
@@ -429,7 +429,7 @@ Tous niveaux acceptés`,
 export const STATIC_PRODUCTS: StaticProduct[] = [
   // SHM - Uniforme
   CHEMISE_SHM,
-  FOULARD_NIDIL,
+  MANDIL_SHM,
 
   // SHM - Accessoires
   NOEUD_TRESSE_CUIR,
