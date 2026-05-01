@@ -73,7 +73,12 @@ export default function SHMCategory() {
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {uniformeProducts.map(product => (
-                      <ProductCard key={product.id} product={product} color="red" />
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        color="red"
+                        onProductClick={(id) => navigate(`/product-detail/${id}`)}
+                      />
                     ))}
                   </div>
                 </div>
@@ -87,7 +92,12 @@ export default function SHMCategory() {
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {accessoiresProducts.map(product => (
-                      <ProductCard key={product.id} product={product} color="red" />
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        color="red"
+                        onProductClick={(id) => navigate(`/product-detail/${id}`)}
+                      />
                     ))}
                   </div>
                 </div>
@@ -103,12 +113,14 @@ export default function SHMCategory() {
 /**
  * Composant réutilisable ProductCard
  */
-function ProductCard({ 
-  product, 
-  color = 'purple' 
-}: { 
-  product: CatalogProduct; 
+function ProductCard({
+  product,
+  color = 'purple',
+  onProductClick,
+}: {
+  product: CatalogProduct;
   color?: string;
+  onProductClick: (id: string) => void;
 }) {
   const colorMap: Record<string, { bg: string; text: string; btn: string; btnHover: string }> = {
     red: {
@@ -165,7 +177,7 @@ function ProductCard({
           {product.price.toFixed(0)} MAD
         </p>
         <Button
-          onClick={() => navigate(`/product-detail/${product.id}`)}
+          onClick={() => onProductClick(product.id)}
           className={`w-full ${colors.btn} ${colors.btnHover}`}
         >
           Voir détails
