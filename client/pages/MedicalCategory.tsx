@@ -3,12 +3,14 @@
  */
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { getCatalogByCategory, CatalogProduct, sortProducts } from '@/services/catalogService';
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
 
 export default function MedicalCategory() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<CatalogProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,7 +76,10 @@ export default function MedicalCategory() {
                     <p className="text-2xl font-bold text-pink-600 mb-3">
                       {product.price.toFixed(2)} MAD
                     </p>
-                    <Button className="w-full bg-pink-600 hover:bg-pink-700">
+                    <Button
+                      onClick={() => navigate(`/product-detail/${product.id}`)}
+                      className="w-full bg-pink-600 hover:bg-pink-700"
+                    >
                       Voir détails
                     </Button>
                   </div>

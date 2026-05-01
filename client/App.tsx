@@ -43,6 +43,7 @@ import Auth from "./pages/Auth";
 
 // Generic Product Detail Page
 import ProductDetail from "./pages/ProductDetail";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 // Information Pages
 import About from "./pages/About";
@@ -94,8 +95,11 @@ const App = () => (
               <Route path="/login" element={<Auth />} />
               <Route path="/register" element={<Auth />} />
 
-              {/* Product Detail Route (Generic) */}
+              {/* Product Detail Route (Generic - Old) */}
               <Route path="/product/:id" element={<ProductDetail />} />
+
+              {/* Product Detail Route (New - Modern UI) */}
+              <Route path="/product-detail/:id" element={<ProductDetailPage />} />
 
               {/* Information Routes */}
               <Route path="/about" element={<About />} />

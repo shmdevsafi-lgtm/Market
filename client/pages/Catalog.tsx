@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { getCatalog, searchProducts, sortProducts, CatalogProduct } from '@/services/catalogService';
 import { Button } from '@/components/ui/button';
@@ -30,6 +30,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function Catalog() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [products, setProducts] = useState<CatalogProduct[]>([]);
@@ -282,7 +283,10 @@ export default function Catalog() {
                         )}
 
                         {/* Bouton */}
-                        <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                        <Button
+                          onClick={() => navigate(`/product-detail/${product.id}`)}
+                          className="w-full bg-purple-600 hover:bg-purple-700"
+                        >
                           Voir détails
                         </Button>
                       </div>

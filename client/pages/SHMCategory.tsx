@@ -4,12 +4,14 @@
  */
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { getCatalogByCategory, CatalogProduct, sortProducts } from '@/services/catalogService';
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
 
 export default function SHMCategory() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<CatalogProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -162,7 +164,10 @@ function ProductCard({
         <p className="text-2xl font-bold mb-3" style={{ color: `var(--color-${color}-600)` }}>
           {product.price.toFixed(0)} MAD
         </p>
-        <Button className={`w-full ${colors.btn} ${colors.btnHover}`}>
+        <Button
+          onClick={() => navigate(`/product-detail/${product.id}`)}
+          className={`w-full ${colors.btn} ${colors.btnHover}`}
+        >
           Voir détails
         </Button>
       </div>

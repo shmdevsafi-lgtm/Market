@@ -2,10 +2,12 @@
  * Packs & Offers Category Page
  */
 
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 
 export default function PacksCategory() {
+  const navigate = useNavigate();
   const packs = [
     {
       id: 'pack-1',
@@ -68,7 +70,10 @@ export default function PacksCategory() {
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-3xl font-bold text-amber-600">{pack.price.toFixed(2)} MAD</span>
                   </div>
-                  <Button className="w-full bg-amber-600 hover:bg-amber-700">
+                  <Button
+                    onClick={() => navigate(`/product-detail/${pack.id}`)}
+                    className="w-full bg-amber-600 hover:bg-amber-700"
+                  >
                     Voir détails
                   </Button>
                 </div>
