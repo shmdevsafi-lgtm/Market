@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import { Menu, X, LogOut, User } from "lucide-react";
+import { Menu, X, LogOut, User, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, userProfile, signOut, loading } = useAuth();
+  const { items } = useCart();
+
+  // Calculer le nombre total d'articles
+  const cartCount = items.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   const navItems = [
     { label: "SHM", href: "/shm" },
@@ -40,8 +45,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          {/* User Section */}
+          {/* Cart Icon + User Section */}
           <div className="flex items-center gap-4">
+            {/* Cart Icon with Badge */}
+            <Link
+              to="/cart"
+              className="relative p-2 hover:bg-white/10 rounded-lg transition-all duration-300 transform hover:scale-110"
+              title="Panier"
+            >
+              <ShoppingCart size={24} className="text-white" />
+              {/* Badge Count */}
+              {cartCount > 0 && (
+                <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse hover:animate-bounce">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </div>
+              )}
+            </Link>
+
             {!loading && user ? (
               <div className="hidden md:flex items-center gap-3">
                 <div className="flex flex-col items-end">
