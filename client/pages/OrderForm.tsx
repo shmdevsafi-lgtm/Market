@@ -32,7 +32,7 @@ type OrderFormData = z.infer<typeof OrderFormSchema>;
 export default function OrderForm() {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
-  const { user, userProfile } = useAuth();
+  const { user, userProfile, loading } = useAuth();
 
   const [formData, setFormData] = useState<OrderFormData>({
     customerName: "",
@@ -46,6 +46,18 @@ export default function OrderForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentStep, setPaymentStep] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
+
+  // Check if user is logged in - if not, redirect to login
+  useEffect(() => {
+    if (loading) return; // Wait for auth to load
+
+    // If not logged in AND cart has items, redirect to login
+    if (!user && !userProfile && items.length > 0) {
+      toast.error("Veuillez vous connecter pour passer une commande");
+      navigate("/auth");
+      return;
+    }
+  }, [loading, user, userProfile, items, navigate]);
 
   // Pre-fill form with user data if logged in
   useEffect(() => {
@@ -123,15 +135,16 @@ export default function OrderForm() {
 
   const handleProceedToPayment = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       toast.error("Veuillez remplir tous les champs requis");
       return;
     }
 
-    if (!user) {
+    // Check if user is logged in
+    if (!user && !userProfile) {
       toast.error("Veuillez vous connecter pour commander");
-      navigate("/login");
+      navigate("/auth");
       return;
     }
 

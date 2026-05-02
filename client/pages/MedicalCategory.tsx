@@ -76,12 +76,14 @@ export default function MedicalCategory() {
                     <p className="text-2xl font-bold text-pink-600 mb-3">
                       {product.price.toFixed(2)} MAD
                     </p>
-                    <Button
-                      onClick={() => navigate(`/product-detail/${product.id}`)}
-                      className="w-full bg-pink-600 hover:bg-pink-700"
-                    >
-                      Voir détails
-                    </Button>
+                    <div className="mt-4">
+                      <Button
+                        onClick={() => navigate(`/product-detail/${product.id}`)}
+                        className="w-full bg-pink-600 hover:bg-pink-700"
+                      >
+                        Voir détails
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}

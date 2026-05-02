@@ -180,7 +180,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // New login method for backend auth system
   const login = (userData: UserProfile) => {
     setUserProfile(userData);
-    // User object is handled by token storage in localStorage
+    // Also set a basic user object for compatibility
+    if (userData.email) {
+      setUser({
+        id: userData.id,
+        email: userData.email,
+        user_metadata: {},
+        aud: 'authenticated',
+        created_at: new Date().toISOString(),
+      } as any);
+    }
   };
 
   const signIn = async (email: string, password: string) => {
