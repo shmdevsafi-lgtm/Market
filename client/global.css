@@ -130,4 +130,71 @@
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-foreground mb-4;
   }
+
+  /* Toast animations - slide in from top */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  .toaster {
+    @apply fixed top-5 left-1/2 z-[9999] max-w-[90vw];
+  }
+
+  .toast {
+    animation: slideDown 0.3s ease-out;
+    @apply fixed top-5 left-1/2 z-[9999] max-w-[90vw] rounded-lg backdrop-blur-sm;
+  }
+
+  /* Cart badge animation - pulse and bounce */
+  @keyframes cartPulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes cartBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  .cart-badge {
+    animation: cartPulse 2s ease-in-out infinite;
+  }
+
+  .cart-badge.bounce {
+    animation: cartBounce 0.5s ease-out !important;
+  }
+}
+
+@layer utilities {
+  /* Mobile-first touch target (44px minimum) */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  /* Smooth transitions */
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Responsive text sizing */
+  .responsive-text {
+    @apply text-base md:text-lg lg:text-xl;
+  }
 }

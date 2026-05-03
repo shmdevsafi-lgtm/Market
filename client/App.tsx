@@ -18,6 +18,15 @@ import Projects from "./pages/Projects";
 import ProjectsPrinting from "./pages/ProjectsPrinting";
 import ProjectsPottery from "./pages/ProjectsPottery";
 
+// Catalog Page (Hybrid Static + Dynamic)
+import Catalog from "./pages/Catalog";
+
+// Category Pages
+import SHMCategory from "./pages/SHMCategory";
+import ScoutCampingCategory from "./pages/ScoutCampingCategory";
+import MedicalCategory from "./pages/MedicalCategory";
+import PacksCategory from "./pages/PacksCategory";
+
 // Order and Cart Pages
 import Cart from "./pages/Cart";
 import OrderForm from "./pages/OrderForm";
@@ -34,6 +43,7 @@ import Auth from "./pages/Auth";
 
 // Generic Product Detail Page
 import ProductDetail from "./pages/ProductDetail";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 // Information Pages
 import About from "./pages/About";
@@ -62,6 +72,15 @@ const App = () => (
           {/* Home */}
           <Route path="/" element={<Home />} />
 
+          {/* Catalog Route (Hybrid Catalog) */}
+          <Route path="/catalog" element={<Catalog />} />
+
+          {/* Category Routes */}
+          <Route path="/shm" element={<SHMCategory />} />
+          <Route path="/scout-camping" element={<ScoutCampingCategory />} />
+          <Route path="/medical" element={<MedicalCategory />} />
+          <Route path="/packs" element={<PacksCategory />} />
+
           {/* Projects Routes */}
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/printing" element={<ProjectsPrinting />} />
@@ -76,8 +95,11 @@ const App = () => (
               <Route path="/login" element={<Auth />} />
               <Route path="/register" element={<Auth />} />
 
-              {/* Product Detail Route (Generic) */}
+              {/* Product Detail Route (Generic - Old) */}
               <Route path="/product/:id" element={<ProductDetail />} />
+
+              {/* Product Detail Route (New - Modern UI) */}
+              <Route path="/product-detail/:id" element={<ProductDetailPage />} />
 
               {/* Information Routes */}
               <Route path="/about" element={<About />} />

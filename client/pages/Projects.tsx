@@ -25,6 +25,13 @@ const categories: Category[] = [
     href: "/projects/stickers",
     description: "ملصقات بتصاميم مختلفة",
   },
+  {
+    id: "cws",
+    label: "C W Studio",
+    icon: "🎨",
+    href: "https://c-w-studio.netlify.app",
+    description: "التصميم والإبداع والحلول البصرية",
+  },
 ];
 
 export default function Projects() {

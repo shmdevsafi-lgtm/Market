@@ -1,153 +1,111 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import type { ProductImage } from "@/types";
+/**
+ * ProductGallery Component
+ * Affiche galerie images avec miniatures
+ * Responsive + interactive
+ */
+
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+interface ProductImage {
+  url: string;
+  alt: string;
+  isPrimary?: boolean;
+}
 
 interface ProductGalleryProps {
   images: ProductImage[];
-  mainImageUrl?: string;
   productName: string;
 }
 
-export default function ProductGallery({
-  images,
-  mainImageUrl,
-  productName,
-}: ProductGalleryProps) {
-  // Sort images: primary first, then by display order
-  const sortedImages = [
-    ...(images || []).filter((img) => img.is_primary),
-    ...(images || []).filter((img) => !img.is_primary).sort((a, b) => a.display_order - b.display_order),
-  ];
+export default function ProductGallery({ images, productName }: ProductGalleryProps) {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const allImages = sortedImages.length > 0 ? sortedImages : [];
-  const primaryImage = allImages[0] || { image_url: mainImageUrl };
-  const thumbnails = allImages.slice(0, 4);
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
+        <div className="text-center text-gray-500">
+          <p className="text-lg">Pas d'image disponible</p>
+        </div>
+      </div>
+    );
+  }
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [zoomLevel, setZoomLevel] = useState(1);
-
-  const currentImage = allImages[selectedIndex] || primaryImage;
-
-  const handleNext = () => {
-    setSelectedIndex((prev) => (prev + 1) % allImages.length);
-  };
+  const currentImage = images[selectedImageIndex];
 
   const handlePrev = () => {
-    setSelectedIndex((prev) =>
-      prev === 0 ? allImages.length - 1 : prev - 1
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1
     );
   };
 
-  const handleThumbnailClick = (index: number) => {
-    setSelectedIndex(index);
+  const handleNext = () => {
+    setSelectedImageIndex((prev) =>
+      prev === images.length - 1 ? 0 : prev + 1
+    );
   };
 
   return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <Card className="overflow-hidden bg-gray-100 aspect-square relative group">
-        <div className="w-full h-full flex items-center justify-center overflow-hidden">
-          {currentImage?.image_url ? (
-            <img
-              src={currentImage.image_url}
-              alt={(currentImage as any)?.alt_text || productName}
-              className="w-full h-full object-cover transition-transform duration-300"
-              style={{ transform: `scale(${zoomLevel})` }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://via.placeholder.com/500x500?text=No+Image";
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-200">
-              <span className="text-gray-500 text-center px-4">
-                Image non disponible
-              </span>
-            </div>
-          )}
-        </div>
+    <div className="w-full">
+      {/* Image Principale */}
+      <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4 group">
+        <img
+          src={currentImage.url}
+          alt={currentImage.alt || productName}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
 
-        {/* Navigation Arrows */}
-        {allImages.length > 1 && (
+        {/* Navigation Arrows (Desktop) */}
+        {images.length > 1 && (
           <>
-            <Button
-              size="icon"
-              variant="secondary"
-              className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+            <button
               onClick={handlePrev}
+              className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition shadow-md"
+              aria-label="Image précédente"
             >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="secondary"
-              className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+              <ChevronLeft size={24} className="text-gray-800" />
+            </button>
+            <button
               onClick={handleNext}
+              className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition shadow-md"
+              aria-label="Image suivante"
             >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              <ChevronRight size={24} className="text-gray-800" />
+            </button>
           </>
         )}
 
-        {/* Image Counter */}
-        {allImages.length > 1 && (
-          <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
-            {selectedIndex + 1} / {allImages.length}
+        {/* Compteur images */}
+        {images.length > 1 && (
+          <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+            {selectedImageIndex + 1} / {images.length}
           </div>
         )}
-      </Card>
+      </div>
 
-      {/* Thumbnails */}
-      {allImages.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          {allImages.map((image, index) => (
+      {/* Miniatures */}
+      {images.length > 1 && (
+        <div className="flex gap-3 overflow-x-auto pb-2">
+          {images.map((image, index) => (
             <button
-              key={image.id}
-              onClick={() => handleThumbnailClick(index)}
-              className={`flex-shrink-0 w-16 h-16 rounded border-2 overflow-hidden transition-all ${
-                selectedIndex === index
-                  ? "border-blue-600 ring-2 ring-blue-300"
-                  : "border-gray-300 hover:border-gray-400"
+              key={index}
+              onClick={() => setSelectedImageIndex(index)}
+              className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition ${
+                selectedImageIndex === index
+                  ? 'border-purple-600 shadow-lg'
+                  : 'border-gray-200 hover:border-gray-300'
               }`}
+              aria-label={`Vue ${index + 1}`}
             >
               <img
-                src={image.image_url}
-                alt={`Thumbnail ${index + 1}`}
+                src={image.url}
+                alt={image.alt || `Miniature ${index + 1}`}
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "https://via.placeholder.com/64x64?text=No+Image";
-                }}
               />
             </button>
           ))}
         </div>
       )}
-
-      {/* Zoom Controls */}
-      <div className="flex gap-2 bg-gray-100 rounded-lg p-2">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setZoomLevel(Math.max(1, zoomLevel - 0.25))}
-          className="flex-1"
-        >
-          − Zoom
-        </Button>
-        <div className="flex items-center justify-center text-sm text-gray-600 min-w-12">
-          {Math.round(zoomLevel * 100)}%
-        </div>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setZoomLevel(Math.min(3, zoomLevel + 0.25))}
-          className="flex-1"
-        >
-          + Zoom
-        </Button>
-      </div>
     </div>
   );
 }
