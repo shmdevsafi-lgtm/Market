@@ -3,8 +3,12 @@ import { Menu, X, LogOut, User, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  // Auto scroll to top on route change
+  useScrollToTop();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, userProfile, signOut, loading } = useAuth();
   const { items } = useCart();
