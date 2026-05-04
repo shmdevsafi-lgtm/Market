@@ -31,8 +31,7 @@ export async function getCatalog(category?: string): Promise<CatalogProduct[]> {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select('*')
-        .eq('status', 'published');
+        .select('*');
 
       if (error) {
         console.warn('⚠️ Erreur chargement produits dynamiques:', error);
@@ -132,8 +131,7 @@ export async function searchProducts(query: string): Promise<CatalogProduct[]> {
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .eq('status', 'published')
-      .or(`title.ilike.%${query}%,description.ilike.%${query}%`);
+      .or(`name.ilike.%${query}%,description.ilike.%${query}%`);
 
     if (!error && data) {
       dynamicResults = data.map(p => ({
@@ -160,8 +158,7 @@ export async function getCatalogStats(): Promise<{
   try {
     const { count, error } = await supabase
       .from('products')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'published');
+      .select('*', { count: 'exact', head: true });
 
     return {
       staticCount: STATIC_PRODUCTS.length,

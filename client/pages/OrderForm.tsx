@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { z } from "zod";
 import { AlertCircle, ShoppingCart, Lock, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,8 +31,9 @@ type OrderFormData = z.infer<typeof OrderFormSchema>;
 
 export default function OrderForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { items, totalPrice, clearCart } = useCart();
-  const { user, userProfile, loading } = useAuth();
+  const { user, userProfile, loading, setRedirectUrl } = useAuth();
 
   const [formData, setFormData] = useState<OrderFormData>({
     customerName: "",
@@ -53,11 +54,13 @@ export default function OrderForm() {
 
     // If not logged in AND cart has items, redirect to login
     if (!user && !userProfile && items.length > 0) {
+      // Save the current URL so we can come back here after login
+      setRedirectUrl(location.pathname);
       toast.error("Veuillez vous connecter pour passer une commande");
       navigate("/auth");
       return;
     }
-  }, [loading, user, userProfile, items, navigate]);
+  }, [loading, user, userProfile, items, navigate, location.pathname, setRedirectUrl]);
 
   // Pre-fill form with user data if logged in
   useEffect(() => {

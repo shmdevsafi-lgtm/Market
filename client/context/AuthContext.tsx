@@ -34,6 +34,8 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   resetPassword: (email: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
+  redirectUrl: string | null;
+  setRedirectUrl: (url: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,6 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
   // Initialize auth state and listen for changes
   useEffect(() => {
@@ -250,6 +253,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signIn,
     resetPassword,
     signOut,
+    redirectUrl,
+    setRedirectUrl,
   };
 
   return (

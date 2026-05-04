@@ -14,7 +14,7 @@ import { LoginForm } from "../components/LoginForm";
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, redirectUrl, setRedirectUrl } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,7 +25,10 @@ export default function Auth() {
     login({ ...user, token });
     setSuccessMessage("Inscription réussie! Bienvenue!");
     setTimeout(() => {
-      navigate("/");
+      // Redirect to saved URL (from OrderForm) or home
+      const targetUrl = redirectUrl || "/";
+      setRedirectUrl(null); // Clear the redirect URL
+      navigate(targetUrl);
     }, 1500);
   };
 
@@ -35,7 +38,10 @@ export default function Auth() {
     login({ ...user, token });
     setSuccessMessage("Connexion réussie! Bienvenue!");
     setTimeout(() => {
-      navigate("/");
+      // Redirect to saved URL (from OrderForm) or home
+      const targetUrl = redirectUrl || "/";
+      setRedirectUrl(null); // Clear the redirect URL
+      navigate(targetUrl);
     }, 1500);
   };
 
